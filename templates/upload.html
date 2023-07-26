@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload{% endblock %}
+
+{% block content %}
+    <form data-bs-theme="dark" method="post" enctype="multipart/form-data">
+        <h1 class="h3 mb-3 fw-normal">Upload</h1>
+        <div class="mb-3">
+            <input type="file" class="form-control" aria-label="file example" name='file' required multiple>
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary" type="submit">Upload File</button>
+        </div>
+    </form>
+{% endblock %}
+

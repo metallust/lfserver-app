@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+{% if message %}
+    <div class="alert alert-primary border text-center" style='display:block' id="alert" role="alert">
+        {{ message }}
+    </div>
+    <script>
+        setTimeout(function() {
+            document.getElementById('alert').style.display = 'none';
+        }, 2000);
+    </script>
+{% endif %}
+<h3>
+    <a href="/close" style="text-decoration: none; color:rgb(159, 159, 159)">
+        {{folder}}
+    </a>
+</h3>
+<form data-bs-theme="dark" method="post" enctype="multipart/form-data" action="/upload">
+    <div class="mb-1">
+        <input type="file" class="form-control" aria-label="file example" name='file' required multiple>
+    </div>
+    <div class="d-grid mb-3">
+        <button class="btn btn-primary" type="submit">Upload File</button>
+    </div>
+</form>
+<div class="row">
+    {% for file in files %}
+    <div class="card col-12 col-sm-6 col-md-4 col-lg-3 mx-2 my-2">
+        <div class="card-header">
+            {% if file.isfile %}
+                <div class="row justify-content-center card-title">
+                    <div class="col-10 p-0">
+                        <h5>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 -960 960 960" width="25"><path d="M226.666-80q-27 0-46.833-19.833T160-146.666v-666.668q0-27 19.833-46.833T226.666-880h360.667L800-667.333v520.667q0 27-19.833 46.833T733.334-80H226.666ZM480-213.334q61.667 0 104.166-43 42.5-42.999 42.5-103.666v-146.666h-53.332V-360q0 39-27 66.167-27.001 27.167-66.334 27.167-39 0-66.167-27.167T386.666-360v-220q0-15 9.667-24.167Q406-613.334 420-613.334q15 0 24.167 9.167Q453.334-595 453.334-580v206.666h53.332V-580q0-36.667-25-61.666-24.999-25-61.666-25-36 0-61.333 25-25.333 24.999-25.333 61.666v220q0 60.667 43 103.666 42.999 43 103.666 43ZM556-636h177.334L556-813.334V-636Z"/></svg>
+                             {{ file.name }}
+                        </h5>
+                    </div>
+                    <div class="col-1">
+                        <a href="/download/{{file.name}}" class="card-link"><svg style="fill: rgb(85, 85, 255);" xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 -960 960 960" width="25"><path d="M226.666-160q-27 0-46.833-19.833T160-226.666V-362h66.666v135.334h506.668V-362H800v135.334q0 27-19.833 46.833T733.334-160H226.666ZM480-315.333 284.667-510.666l47.333-48 114.667 114.667V-800h66.666v356.001L628-558.666l47.333 48L480-315.333Z"/></svg></a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="row justify-content-center card-title">
+                    <div class="col-10 p-0">
+                        <h5>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 -960 960 960" width="25"><path d="M147.333-160q-27 0-46.833-20.167-19.833-20.166-19.833-46.499v-506.668q0-26.333 19.833-46.499Q120.333-800 147.333-800H414l66.667 66.666H814q26.334 0 46.5 20.167 20.167 20.166 20.167 46.5v440.001q0 26.333-20.167 46.499Q840.334-160 814-160H147.333Z"/></svg>
+                            {{ file.name }}
+                        </h5>
+                    </div>
+                    <div class="col-1">
+                        <a href="/open/{{file.name}}" class="card-link"><svg style="fill: rgb(85, 85, 255);" xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 -960 960 960" width="25"><path d="M186.666-120q-27 0-46.833-19.833T120-186.666v-586.668q0-27 19.833-46.833T186.666-840H466v66.666H186.666v586.668h586.668V-466H840v279.334q0 27-19.833 46.833T773.334-120H186.666ZM384-336.667 337.333-384l389.334-389.334H532.666V-840H840v307.334h-66.666v-193.335L384-336.667Z"/></svg></a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="card-footer text-body-secondary p-0" style="text-align: right;">
+            {{ file.upload_date }}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
